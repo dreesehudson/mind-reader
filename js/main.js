@@ -3,19 +3,20 @@
 
 //declare variable for each HTML element
 let bigText = document.getElementById("big-text");
-let nextBtn = document.getElementById("next-btn");
 let example = document.getElementById("example");
 let instruction = document.getElementById("instruction");
-let restartBtn = document.getElementById("restart-btn");
+let leftBtn = document.getElementById("left-btn");
+let rightBtn = document.getElementById("right-btn");
 let chosenSymbol = null;
 let nineNumbers = null;
 
-nextBtn.addEventListener("click", incrementState);
-restartBtn.addEventListener("click", resetState);
+leftBtn.addEventListener("click", incrementState);
+rightBtn.addEventListener("click", resetState);
 
 //set initial page/state value
 let state = 0;
 
+//functions
 //add Event Listener to buttons and load inital state
 function init() {
     renderState();
@@ -24,7 +25,18 @@ function init() {
 //array of symbols to populate the list
 let symbols = ["!", "@", "#", "$", "%", "^", "&amp;", "*", "(", ")"];
 
-//functions
+//switches btn function to state incrementor
+function makeIncrementor (element) {
+    element.removeEventListener("click", resetState);
+    element.addEventListener("click", incrementState);
+}
+
+//switches btn function to state reset-er
+function makeReset (element) {
+    element.removeEventListener("click", incrementState);
+    element.addEventListener("click", resetState);
+}
+
 //advance state, applies to the reset-btn in state 0, next-btn in state 1-5
 function incrementState() {
     state++;
@@ -37,9 +49,48 @@ function resetState() {
         incrementState();
     }
     else { state = 0; };
-
+    
     renderState();
 }
+
+//switches btn to btn-primary class
+function setButtonPrimary(element) {
+    element.classList.remove("btn-secondary");
+    element.classList.add("btn-primary");
+}
+//switches btn to btn-secondary class
+function setButtonSecondary(element) {
+    element.classList.remove("btn-primary");
+    element.classList.add("btn-secondary");
+}
+
+//set visibility class on element to invisible
+function hide(element) {
+    element.style.visibility = "hidden";
+}
+
+//set visibility class on element to visible
+function show(element) {
+    element.style.visibility = "visible";
+}
+
+//randomly assigns symbol to be applied to multiples of 9's
+function assignSymbol() {
+    nineNumbers = symbols[Math.floor(Math.random() * 10)];
+    let numSymPair = "";
+    for (i = 0; i < 100; i++) {
+        if (i % 9) {
+            let nonNineNumbers = symbols[Math.floor(Math.random() * 10)];
+            numSymPair += i + " --- " + nonNineNumbers + "<br>";
+        }
+        else {
+            numSymPair += i + " --- " + nineNumbers + "<br>";
+            chosenSymbol = nineNumbers;
+        }
+    }
+    return numSymPair;
+}
+
 
 //update view 
 function renderState() {
@@ -47,25 +98,24 @@ function renderState() {
         //state [0]
         case 0:
             //show- big-text: opening message
-            bigText.style.visibility = "visible";
+            show(bigText);
             bigText.innerHTML = "I can read your mind.";
-            //hide- next-btn
-            nextBtn.style.visibility = "hidden";
-            nextBtn.innerHTML = "Next";
-
+            
             //hide- example
             example.innerHTML = "";
-            example.style.visibility = "hidden";
-
+            hide(example);
+            
             //hide- instructions
-            instruction.style.visibility = "hidden";
+            hide(instruction);
 
-            //show- start button: right-arrow
-            restartBtn.style.visibility = "visible";
-            restartBtn.classList.remove("btn-secondary");
-            restartBtn.classList.add("btn-primary");
-            //setButtonPrimary(restartBtn);
-            restartBtn.innerHTML = '<i class="fas fa-arrow-right"></i>';
+            //hide- left-btn
+            hide(leftBtn);
+
+            //show- start button: right-arrow (primary)
+            show(rightBtn);
+            setButtonPrimary(rightBtn);
+            makeIncrementor(rightBtn);
+            rightBtn.innerHTML = '<i class="fas fa-arrow-right"></i>';
 
             break;
 
@@ -74,24 +124,25 @@ function renderState() {
             //show- big-text: "Pick a number 01-99"
             bigText.innerHTML = "Pick a number 01-99.";
 
-            //show- next button: "Next" -> advance state
-            nextBtn.style.visibility = "visible";
-            nextBtn.innerHTML = "Next";
-
+            
             //hide- example
             //clearing content in "example" to shrink height of hidden div
             example.innerHTML = "";
-
+            
             //show- instructions: "when you have your number click next"
-            instruction.style.visibility = "visible";
+            show(instruction);
             instruction.innerHTML = "when you have your number click next.";
+            
+            //show- left button: "back arrow" -> reset state
+            show(leftBtn);
+            makeReset(leftBtn);
+            setButtonSecondary(leftBtn);
+            leftBtn.innerHTML = '<i class="fas fa-step-backward"></i>';
 
-            //show- restart button: : back arrow icon
-            restartBtn.innerHTML = '<i class="fas fa-step-backward"></i>';
-            restartBtn.style.visibility = "visible";
-            restartBtn.classList.remove("btn-primary");
-            restartBtn.classList.add("btn-secondary");
-            // restartBtn.setButtonSecondary();
+            //show- right button: : right arrow icon
+            rightBtn.innerHTML = '<i class="fas fa-arrow-right"></i>';
+            show(rightBtn);
+            setButtonPrimary(rightBtn);
 
             break;
 
@@ -100,20 +151,20 @@ function renderState() {
             //show- big-text: "add both digits together to get new number"
             bigText.innerHTML = "add both digits together to get new number.";
 
-            //show- next button: "Next" -> advance state
-            //no action same as previous state.
-
-
+            
+            
             //show- example: "Ex. 14 is 1 + 4 = 5"
-            example.style.visibility = "visible";
+            show(example);
             example.innerHTML = "Ex. 47 is 4 + 7 = 11.";
-
-
+            
+            
             //show- instructions: "click next to proceed"
             instruction.innerHTML = "click next to proceed.";
-
-
-            //show- restart button -> state [0]: back arrow
+            
+            //show- left button: "back arrow" -> reset state
+            //no action same as previous state.
+            
+            //show- right button -> : next arrow
             //no action same as previous state.
 
             break;
@@ -164,21 +215,24 @@ function renderState() {
             bigText.innerHTML = "Your symbol is " + nineNumbers;
 
             //hide- next button
-            nextBtn.style.visibility = "hidden";
+            show(leftBtn);
 
             //show- example: "Your symbol is:"
             example.innerHTML = "";
-            example.style.visibility = "hidden";
+            hide(example);
 
             //show- instructions: symbol
-            instruction.style.visibility = "visible";
+            show(instruction);
             instruction.innerHTML = "Add $1 to Play Again.";
 
 
             //show- restart button -> state [0]: circle arrow
-            restartBtn.classList.remove("btn-secondary");
-            restartBtn.classList.add("btn-primary");
-            //document.getElementById("restart-Btn").setButtonPrimary();
+            hide(rightBtn);
+            setButtonPrimary(leftBtn);
+            makeReset(leftBtn);
+            leftBtn.innerHTML = '<i class="fas fa-step-backward"></i>';
+
+
             break;
 
         default:
@@ -189,41 +243,6 @@ function renderState() {
     }
 }
 
-//switches btn to btn-primary class
-function setButtonPrimary(element) {
-    document.getElementById(element).classList.remove("btn-secondary").add("btn-primary");
-}
-//switches btn to btn-secondary class
-function setButtonSecondary(element) {
-    document.getElementById(element).classList.remove("btn-primary").add("btn-secondary");
-}
-
-//set visibility class on element to invisible
-function hideElement(element) {
-    document.getElementById(element).classList.remove(visible).add(invisible);
-}
-
-//set visibility class on element to visible
-function showElement(element) {
-    document.getElementById(element).classList.remove(invisible).add(visible);
-}
-
-//randomly assigns symbol to be applied to multiples of 9's
-function assignSymbol() {
-    nineNumbers = symbols[Math.floor(Math.random() * 10)];
-    let numSymPair = "";
-    for (i = 0; i < 100; i++) {
-        if (i % 9) {
-            let nonNineNumbers = symbols[Math.floor(Math.random() * 10)];
-            numSymPair += i + " --- " + nonNineNumbers + "<br>";
-        }
-        else {
-            numSymPair += i + " --- " + nineNumbers + "<br>";
-            chosenSymbol = nineNumbers;
-        }
-    }
-    return numSymPair;
-}
 
 
 
