@@ -14,6 +14,8 @@
     <!-- Font Awesome Link -->
     <script src="https://kit.fontawesome.com/3e3b3c78b6.js" crossorigin="anonymous"></script>
 
+    <!-- Local CSS -->
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body onload="init()">
@@ -33,28 +35,31 @@
                             <p id="example" class="card-text text-center" style="visibility: hidden;"> Example Text</p>
                         </div>
                     </div>
-                    <div class="row my-5">
-                        <div class="col">
-                            <p id="instruction" class="card-text text-center" style="visibility: hidden;"> instructions
-                            </p>
-                        </div>
-                    </div>
-                    <div class="row my-5">
-                        <div class="col-6 text-center">
-                            <button id="restart-btn" class="btn btn-secondary"
-                                style="border-radius: 100%; visibility: visible;"><i class="fas fa-arrow-right"></i>
-                            </button>
-                        </div>
-                        <div class="col-6 text-center">
-                            <button id="next-btn" class="btn btn-primary" style="visibility: hidden;">Next
-                                Button</button>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
-
+    <footer class="fixed-bottom">
+        <div class="container-fluid bg-white">
+            <div class="row my-5">
+                <div class="col">
+                    <p id="instruction" class="card-text text-center" style="visibility: hidden;"> instructions
+                    </p>
+                </div>
+            </div>
+            <div class="row my-5">
+                <div class="col-6 text-center">
+                    <button id="restart-btn" class="btn btn-secondary"
+                        style="border-radius: 100%; visibility: visible;"><i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+                <div class="col-6 text-center">
+                    <button id="next-btn" class="btn btn-primary" style="visibility: hidden;">Next
+                        Button</button>
+                </div>
+            </div>
+        </div>
+    </footer>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
