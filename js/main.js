@@ -2,16 +2,16 @@
 //variables
 
 //declare variable for each HTML element
-let bigText = document.getElementById("big-text").innerHTML;
-let nextBtn = document.getElementById("next-btn").innerHTML;
-let example = document.getElementById("example").innerHTML;
-let instruction = document.getElementById("instruction").innerHTML;
-let restartBtn = document.getElementById("restart-btn").innerHTML;
+let bigText = document.getElementById("big-text");
+let nextBtn = document.getElementById("next-btn");
+let example = document.getElementById("example");
+let instruction = document.getElementById("instruction");
+let restartBtn = document.getElementById("restart-btn");
 let chosenSymbol = null;
 let nineNumbers = null;
 
-document.getElementById("next-btn").addEventListener("click", incrementState);
-document.getElementById("restart-btn").addEventListener("click", resetState);
+nextBtn.addEventListener("click", incrementState);
+restartBtn.addEventListener("click", resetState);
 
 //set initial page/state value
 let state = 0;
@@ -47,66 +47,70 @@ function renderState() {
         //state [0]
         case 0:
             //show- big-text: opening message
-            document.getElementById("big-text").style.visibility = "visible";
-            document.getElementById("big-text").innerHTML = "I can read your mind.";
+            bigText.style.visibility = "visible";
+            bigText.innerHTML = "I can read your mind.";
             //hide- next-btn
-            document.getElementById("next-btn").style.visibility = "hidden";
-            document.getElementById("next-btn").innerHTML = "Next";
+            nextBtn.style.visibility = "hidden";
+            nextBtn.innerHTML = "Next";
 
             //hide- example
-            document.getElementById("example").innerHTML = "";
-            document.getElementById("example").style.visibility = "hidden";
+            example.innerHTML = "";
+            example.style.visibility = "hidden";
 
             //hide- instructions
-            document.getElementById("instruction").style.visibility = "hidden";
+            instruction.style.visibility = "hidden";
 
             //show- start button: right-arrow
-            document.getElementById("restart-btn").style.visibility = "visible";
-            //document.getElementById("restart-btn").setButtonPrimary();
-            document.getElementById("restart-btn").innerHTML = '<i class="fas fa-arrow-right"></i>';
+            restartBtn.style.visibility = "visible";
+            restartBtn.classList.remove("btn-secondary");
+            restartBtn.classList.add("btn-primary");
+            //setButtonPrimary(restartBtn);
+            restartBtn.innerHTML = '<i class="fas fa-arrow-right"></i>';
 
             break;
 
         //state [1]
         case 1:
             //show- big-text: "Pick a number 01-99"
-            document.getElementById("big-text").innerHTML = "Pick a number 01-99.";
+            bigText.innerHTML = "Pick a number 01-99.";
 
             //show- next button: "Next" -> advance state
-            document.getElementById("next-btn").style.visibility = "visible";
-            document.getElementById("next-btn").innerHTML = "Next";
+            nextBtn.style.visibility = "visible";
+            nextBtn.innerHTML = "Next";
 
             //hide- example
             //clearing content in "example" to shrink height of hidden div
-            document.getElementById("example").innerHTML = "";
+            example.innerHTML = "";
 
             //show- instructions: "when you have your number click next"
-            document.getElementById("instruction").style.visibility = "visible";
-            document.getElementById("instruction").innerHTML = "when you have your number click next.";
+            instruction.style.visibility = "visible";
+            instruction.innerHTML = "when you have your number click next.";
 
             //show- restart button: : back arrow icon
-            document.getElementById("restart-btn").innerHTML = '<i class="fas fa-step-backward"></i>';
-            document.getElementById("restart-btn").style.visibility = "visible";
-            //document.getElementById("restart-btn").setButtonSecondary();
+            restartBtn.innerHTML = '<i class="fas fa-step-backward"></i>';
+            restartBtn.style.visibility = "visible";
+            restartBtn.classList.remove("btn-primary");
+            restartBtn.classList.add("btn-secondary");
+            // restartBtn.setButtonSecondary();
 
             break;
 
         //state [2]
         case 2:
             //show- big-text: "add both digits together to get new number"
-            document.getElementById("big-text").innerHTML = "add both digits together to get new number.";
+            bigText.innerHTML = "add both digits together to get new number.";
 
             //show- next button: "Next" -> advance state
             //no action same as previous state.
 
 
             //show- example: "Ex. 14 is 1 + 4 = 5"
-            document.getElementById("example").style.visibility = "visible";
-            document.getElementById("example").innerHTML = "Ex. 47 is 4 + 7 = 11.";
+            example.style.visibility = "visible";
+            example.innerHTML = "Ex. 47 is 4 + 7 = 11.";
 
 
             //show- instructions: "click next to proceed"
-            document.getElementById("instruction").innerHTML = "click next to proceed.";
+            instruction.innerHTML = "click next to proceed.";
 
 
             //show- restart button -> state [0]: back arrow
@@ -117,13 +121,13 @@ function renderState() {
         //state [3]
         case 3:
             //show- big-text: "subtract new number from original number"
-            document.getElementById("big-text").innerHTML = "subtract new number from original number.";
+            bigText.innerHTML = "subtract new number from original number.";
 
             //show- next button: "Next" -> advance state
             //no action same as previous state.
 
             //show- example: "Ex. 14 - 5 = 9"
-            document.getElementById("example").innerHTML = "Ex. 47 - 11 = 36.";
+            example.innerHTML = "Ex. 47 - 11 = 36.";
 
             //show- instructions: "click next to proceed"
             //no action same as previous state.
@@ -139,16 +143,16 @@ function renderState() {
             let str = assignSymbol();
             
             //show- big-text: list of number - symbol pairs
-            document.getElementById("big-text").innerHTML = "Find your new number.";
+            bigText.innerHTML = "Find your new number.";
 
             //show- next button: "Reveal" -> advance state
-            document.getElementById("next-btn").innerHTML = "Reveal";
+            nextBtn.innerHTML = "Reveal";
 
             //show- example: "string of number symbol pairs"
-            document.getElementById("example").innerHTML = str;
+            example.innerHTML = str;
 
             //show- instructions: Note the symbol beside the number
-            document.getElementById("instruction").innerHTML = "Note the symbol beside the number.";
+            instruction.innerHTML = "Note the symbol beside the number.";
 
             //show- restart button -> state [0]: circle arrow
             //no action same as previous state
@@ -157,21 +161,23 @@ function renderState() {
         case 5:
             //state [5]
             //show- big-text: symbol reveal
-            document.getElementById("big-text").innerHTML = "Your symbol is " + nineNumbers;
+            bigText.innerHTML = "Your symbol is " + nineNumbers;
 
             //hide- next button
-            document.getElementById("next-btn").style.visibility = "hidden";
+            nextBtn.style.visibility = "hidden";
 
             //show- example: "Your symbol is:"
-            document.getElementById("example").innerHTML = "";
-            document.getElementById("example").style.visibility = "hidden";
+            example.innerHTML = "";
+            example.style.visibility = "hidden";
 
             //show- instructions: symbol
-            document.getElementById("instruction").style.visibility = "visible";
-            document.getElementById("instruction").innerHTML = "Add $1 to Play Again.";
+            instruction.style.visibility = "visible";
+            instruction.innerHTML = "Add $1 to Play Again.";
 
 
             //show- restart button -> state [0]: circle arrow
+            restartBtn.classList.remove("btn-secondary");
+            restartBtn.classList.add("btn-primary");
             //document.getElementById("restart-Btn").setButtonPrimary();
             break;
 
@@ -185,11 +191,11 @@ function renderState() {
 
 //switches btn to btn-primary class
 function setButtonPrimary(element) {
-    document.getElementById(element).classList.remove(btn - secondary).add(btn - primary);
+    document.getElementById(element).classList.remove("btn-secondary").add("btn-primary");
 }
 //switches btn to btn-secondary class
 function setButtonSecondary(element) {
-    document.getElementById(element).classList.remove(btn - primary).add(btn - secondary);
+    document.getElementById(element).classList.remove("btn-primary").add("btn-secondary");
 }
 
 //set visibility class on element to invisible
