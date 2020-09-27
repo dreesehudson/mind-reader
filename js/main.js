@@ -77,18 +77,18 @@ function show(element) {
 //randomly assigns symbol to be applied to multiples of 9's
 function assignSymbol() {
     nineNumbers = symbols[Math.floor(Math.random() * 10)];
-    let numSymPair = "";
+    let str = "";
     for (i = 0; i < 100; i++) {
         if (i % 9) {
             let nonNineNumbers = symbols[Math.floor(Math.random() * 10)];
-            numSymPair += i + " --- " + nonNineNumbers + "<br>";
+            str += i + " --- " + nonNineNumbers + "<br>";
         }
         else {
-            numSymPair += i + " --- " + nineNumbers + "<br>";
+            str += i + " --- " + nineNumbers + "<br>";
             chosenSymbol = nineNumbers;
         }
     }
-    return numSymPair;
+    return str;
 }
 
 
@@ -196,8 +196,7 @@ function renderState() {
             //show- big-text: list of number - symbol pairs
             bigText.innerHTML = "Find your new number.";
 
-            //show- next button: "Reveal" -> advance state
-            nextBtn.innerHTML = "Reveal";
+            //show- next button: "right arrow" -> advance state
 
             //show- example: "string of number symbol pairs"
             example.innerHTML = str;
